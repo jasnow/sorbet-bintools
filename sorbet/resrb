@@ -1,0 +1,135 @@
+rm -rf o_r* Makefile
+#7/6/2019: HID FOR NOW: rm -rf sorbet ~/.cache/sorbet
+
+######################################################################
+# CHECK for commented out sorbet-rails gem.
+grep 'sorbet-rails' Gemfile |egrep -v "^#" |wc -l \
+| awk '{ print $1 }' > /tmp/$$_PATTERN
+#DEBUG: cat /tmp/$$_PATTERN
+if [ "X`cat /tmp/$$_PATTERN`X" = "X0X" ] ; then
+    : # OK
+else
+    echo "sorbet-rails can't be in Gemfile when running 'srb init'"
+    grep 'sorbet-rails' Gemfile |egrep -v "^#"
+#PR79:    exit 
+fi
+rm -f /tmp/$$_PATTERN
+
+######################################################################
+#### 3
+echo "Assuming YES: Did you run 'rerake' ?"
+#7/6/2019: HID FOR NOW: read LINE
+
+#### 4
+thechecks
+
+#### 5
+echo "Running 'srb init'"
+SRB_YES=1 bundle exec srb init > o_r 2> o_r_stderr
+git diff
+
+###################################################################### 
+echo "Start running 'src tc' commands"
+echo '#### 8 "srb tc" - Output: "No errors! Great job."'
+srb tc
+git diff |wc
+
+echo '#### 8b "srb tc ." - Output: "No errors! Great job."'
+srb tc .
+git diff |wc
+
+echo '#### 8c "srb tc --no-config ." - Output: "No errors! Great job."'
+srb tc --no-config .
+git diff |wc
+
+######################################################################
+echo "Start runninig other 'srb rbi' options"
+echo "#### 7a"
+srb rbi config
+git diff |wc
+
+#SEPARATE CMD:
+#echo "#### 7d - 'srb rbi gems'"
+#srb rbi gems > o_rg 2>&1
+#git diff |wc
+#
+#SEPARATE CMD:
+#echo "#### 7e - 'srb rbi hidden-definitions'"
+#srb rbi hidden-definitions > o_rh 2>&1
+#git diff |wc
+#
+#SEPARATE CMD:
+#echo "#### 7c"
+#srb rbi sorbet-typed
+#git diff |wc
+
+echo "#### 7f - 'srb rbi todo'"
+srb rbi todo
+git diff |wc
+
+echo "#### 7g - rf"
+srb rbi find-gem-rbis 2> o_rf 2>&1
+git diff |wc
+
+echo "#### 7b"
+srb rbi suggest-typed
+git diff |wc
+
+srb tc 2>&1 |tee o_tc
+
+# sorbet-rails tasks (7/11/2019: Added)
+if [ "X`rake -T |grep rbi`X" == "XX" ] ; then
+    : # Skip
+else
+    rake rails_rbi:routes
+    rake rails_rbi:models
+fi
+
+#### 9
+typeds
+
+#echo "Pushed results to GH if clean."
+
+######################################################################
+REPONAME=`pwd |sed -e "s,.*/,,"` # ; echo "REPO=[${REPONAME}]"
+if [ "X$1X" == "XgoldX" ] ; then
+    #### 6
+    echo "Running (6) getreferrs"
+    getreferrs 2> /dev/null
+
+    echo "Saving output files" 
+    cp o_r  $HOME/bin/sorbet/FILES/o_r_${REPONAME}
+    #cp o_rg $HOME/bin/sorbet/FILES/o_rg_${REPONAME}
+    #cp o_rh $HOME/bin/sorbet/FILES/o_rh_${REPONAME}
+    cp o_rf $HOME/bin/sorbet/FILES/o_rf_${REPONAME}
+    cp reflecti*err $HOME/bin/sorbet/FILES/o_ref_err_${REPONAME} \
+      2> /dev/null
+else
+    echo "Diffing o_r file"
+    diff $HOME/bin/sorbet/FILES/o_r_${REPONAME} o_r \
+    | egrep -v " aliases$|from-source.json$|/reflection.json|-> 0.[0-9]*s" \
+    | egrep -v "from-source.json$|/reflection.json$|/hidden.rbi.tmp$" \
+    | egrep -v "WARN Selenium \[DEPRECATION\] Selenium::WebDriver" \
+    | egrep -v "[,0-9]*c[,0-9]*$|^---$"
+
+    #echo ; echo "Diffing o_rg file"
+    #diff $HOME/bin/sorbet/FILES/o_rg_${REPONAME} o_rg \
+    #| egrep -v " aliases$|from-source.json$|/reflection.json|-> 0.[0-9]*s" \
+    #| egrep -v "from-source.json$|/reflection.json$|/hidden.rbi.tmp$" \
+    #| egrep -v "WARN Selenium \[DEPRECATION\] Selenium::WebDriver" \
+    #| egrep -v "[,0-9]*c[,0-9]*$|^---$"
+    #
+    #echo ; echo "Diffing o_rh file"
+    #diff $HOME/bin/sorbet/FILES/o_rh_${REPONAME} o_rh \
+    #| egrep -v " aliases$|from-source.json$|/reflection.json|-> 0.[0-9]*s" \
+    #| egrep -v "from-source.json$|/reflection.json$|/hidden.rbi.tmp$" \
+    #| egrep -v "WARN Selenium \[DEPRECATION\] Selenium::WebDriver" \
+    #| egrep -v "[,0-9]*c[,0-9]*$|^---$"
+
+    echo ; echo "Diffing o_rf file"
+    diff $HOME/bin/sorbet/FILES/o_rf_${REPONAME} o_rf \
+    | egrep -v " aliases$|from-source.json$|/reflection.json|-> 0.[0-9]*s" \
+    | egrep -v "from-source.json$|/reflection.json$|/hidden.rbi.tmp$" \
+    | egrep -v "WARN Selenium \[DEPRECATION\] Selenium::WebDriver" \
+    | egrep -v "[0-9,]*c[,0-9]*$|^---$"
+fi

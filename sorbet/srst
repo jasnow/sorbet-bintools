@@ -1,0 +1,3 @@
+# srst: "download community maintained type def's for gems"
+
+srb rbi sorbet-typed

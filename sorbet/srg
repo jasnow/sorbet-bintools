@@ -1,0 +1,3 @@
+# srg: ("generate arity-only type defs by req'ing gems")
+
+bundle exec srb rbi gems

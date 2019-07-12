@@ -1,0 +1,71 @@
+(
+#### 7
+THESTR="Failed to load"
+THENBR="7"
+echo
+echo "#### ${THESTR} TODO(${THENBR}) #################################################"
+egrep -c "${THESTR}"  $*
+
+#### 2
+THESTR="dalli"
+THENBR="2"
+echo
+echo "#### ${THESTR} TODO(${THENBR}) #################################################"
+egrep -c "${THESTR}"  $*
+
+#### 3
+THESTR="redis"
+THENBR="3"
+echo
+echo "#### ${THESTR} TODO(${THENBR}) #################################################"
+egrep -c "${THESTR}"  $*
+
+#### 17
+THESTR="omniauth"
+THENBR="17"
+echo
+echo "#### ${THESTR} TODO(${THENBR}) #################################################"
+egrep -c "${THESTR}"  $*
+
+#### 4
+THESTR="DEPRECATION WARNING"
+THENBR="4"
+echo
+echo "#### ${THESTR} TODO(${THENBR}) #################################################"
+egrep -c "${THESTR}"  $*
+
+#### 5
+THESTR="warning: constant.*deprecated"
+THENBR="5"
+echo
+echo "#### ${THESTR} TODO(${THENBR}) #################################################"
+egrep -c "${THESTR}"  $*
+
+#### 13
+THESTR="Warning.*minitest"
+THENBR="13"
+echo
+echo "#### ${THESTR} TODO(${THENBR}) #################################################"
+egrep -c "${THESTR}"  $*
+
+#### 12
+THESTR="stack level too deep"
+THENBR="12"
+echo
+echo "#### ${THESTR} TODO(${THENBR}) #################################################"
+egrep -c "${THESTR}"  $*
+
+#### 19
+THESTR="wrong number of arguments"
+THENBR="19"
+echo
+echo "#### ${THESTR} TODO(${THENBR}) #################################################"
+egrep -c "${THESTR}"  $*
+
+#### 6
+THESTR="find gem for"
+THENBR="6"
+echo
+echo "#### ${THESTR} TODO(${THENBR}) #################################################"
+egrep -c "${THESTR}"  $*
+) | egrep -v ":0$"

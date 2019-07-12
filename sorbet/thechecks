@@ -1,0 +1,262 @@
+srb --version
+
+cat << EOF >> /tmp/$$_HELP_MSG
+A type checker for Ruby
+
+Usage:
+  srb                                 Same as "srb t"
+  srb (init | initialize)             Initializes the \`sorbet\` directory
+  srb rbi [options]                   Manage the \`sorbet\` directory
+  srb (t | tc | typecheck) [options]  Typechecks the code
+
+Options:
+  -h, --help     View help for this subcommand.
+  --version      Show version.
+
+For full help:
+  https://sorbet.org
+EOF
+
+rm -rf sorbet o_r
+
+echo -n "1"
+cat << EOF > /tmp/$$_1_RIGHT
+No errors! Great job.
+EOF
+bundle exec srb typecheck -e 'puts "Hello, world!"' > /tmp/$$_1 2>&1 
+diff /tmp/$$_1_RIGHT /tmp/$$_1
+
+echo -n "2"
+cat << EOF > /tmp/$$_2_RIGHT
+true
+EOF
+bundle exec ruby -e 'puts(require "sorbet-runtime")' > /tmp/$$_2 2>&1
+diff /tmp/$$_2_RIGHT /tmp/$$_2
+
+echo -n "3"
+echo "No sorbet/ directory found. Maybe you want to run 'srb init'?" > /tmp/$$_3_RIGHT 
+echo >> /tmp/$$_3_RIGHT
+cat /tmp/$$_HELP_MSG >> /tmp/$$_3_RIGHT
+bundle exec srb > /tmp/$$_3 2>&1
+diff /tmp/$$_3_RIGHT /tmp/$$_3
+
+echo -n "4"
+cp /tmp/$$_3_RIGHT /tmp/$$_4_RIGHT
+bundle exec srb t > /tmp/$$_4 2>&1
+diff /tmp/$$_4_RIGHT /tmp/$$_4
+
+echo -n "5"
+echo "Unknown subcommand \`-h\`" > /tmp/$$_5_RIGHT
+cat /tmp/$$_HELP_MSG >> /tmp/$$_5_RIGHT
+bundle exec srb -h > /tmp/$$_5 2>&1
+diff /tmp/$$_5_RIGHT /tmp/$$_5
+
+echo -n "6"
+echo "Unknown subcommand \`--help\`" > /tmp/$$_6_RIGHT
+cat /tmp/$$_HELP_MSG >> /tmp/$$_6_RIGHT
+bundle exec srb --help > /tmp/$$_6 2>&1
+diff /tmp/$$_6_RIGHT /tmp/$$_6
+
+echo -n "7"
+cat << EOFRBI > /tmp/$$_7_RIGHT
+Usage: srb rbi <command>
+    This script gets your current directory ready for using Sorbet by making all sorts of files in ./sorbet/. You should commit them to version control.
+
+    We recommend running it without any options which will execute all the commands in order. If you only need a certain piece, you can pass a command to just run that part.
+
+    You should re-run this script if your program ever stops typechecking due to dynamic code in your project.
+
+    Common Commands:
+      help                Print this message
+      <empty> | update    Run all initialization commands
+
+    Specific Commands:
+      config              Recreate sorbet/config
+      sorbet-typed        Download community maintained type definitions for gems
+      gems                Generate arity-only type definitions by requiring the gem
+      hidden-definitions  Load all your code and generate type definitions for any dynamic code
+      todo                Run Sorbet and generate constants which Sorbet errors on
+      suggest-typed       Put the highest \`typed:\` sigil in each of your files
+      find-gem-rbis       Find all \`rbi/\` directories in your gems and list them in \`~/.cache/sorbet\`
+      
+EOFRBI
+bundle exec srb rbi --help > /tmp/$$_7 2>&1
+diff /tmp/$$_7_RIGHT /tmp/$$_7
+
+echo -n "8"
+cat << EOFTC > /tmp/$$_8_RIGHT
+Typechecker for Ruby
+Usage:
+  sorbet [OPTION...] <path 1> <path 2> ...
+
+  -e, string     Parse an inline ruby string (default: )
+  -q, --quiet    Silence all non-critical errors
+  -v, --verbose  Verbosity level [0-3]
+  -h,            Show short help
+      --help     Show long help
+      --version  Show version
+
+ advanced options:
+      --dir arg                 Input directory
+      --file arg                Input file
+      --configatron-dir path    Path to configatron yaml folders
+      --configatron-file path   Path to configatron yaml files
+      --web-trace-file file     Web trace file. For use with chrome
+                                about://tracing (default: )
+      --debug-log-file file     Path to debug log file (default: )
+      --reserve-mem-kb arg      Preallocate the specified amount of memory
+                                for symbol+name tables (default: 0)
+      --stdout-hup-hack         Monitor STDERR for HUP and exit on hangup
+      --remove-path-prefix prefix
+                                Remove the provided path prefix from all
+                                printed paths. Defaults to the input directory
+                                passed to Sorbet, if any. (default: )
+  -a, --autocorrect             Auto-correct source files with suggested
+                                fixes
+      --suggest-runtime-profiled
+                                When suggesting signatures in \`typed: strict\`
+                                mode, suggest \`::T::Utils::RuntimeProfiled\`
+  -P, --progress                Draw progressbar
+      --licence                 Show licence
+      --color {always,never,[auto]}
+                                Use color output (default: auto)
+      --lsp                     Start in language-server-protocol mode
+      --no-config               Do not load the content of the
+                                \`sorbet/config\` file
+      --disable-watchman        When in language-server-protocol mode,
+                                disable file watching via Watchman
+      --watchman-path arg       Path to watchman executable. Defaults to
+                                using \`watchman\` on your PATH. (default: watchman)
+      --enable-experimental-lsp-go-to-definition
+                                Enable experimental LSP feature:
+                                Go-to-definition
+      --enable-experimental-lsp-find-references
+                                Enable experimental LSP feature: Find
+                                References
+      --enable-experimental-lsp-autocomplete
+                                Enable experimental LSP feature: Autocomplete
+      --enable-experimental-lsp-workspace-symbols
+                                Enable experimental LSP feature: Workspace
+                                Symbols
+      --enable-experimental-lsp-document-symbol
+                                Enable experimental LSP feature: Document
+                                Symbol
+      --enable-experimental-lsp-signature-help
+                                Enable experimental LSP feature: Signature
+                                Help
+      --enable-all-experimental-lsp-features
+                                Enable every experimental LSP feature.
+      --ignore string           Ignores input files that contain the given
+                                string in their paths (relative to the input
+                                path passed to Sorbet). Strings beginning with /
+                                match against the prefix of these relative
+                                paths; others are substring matchs. Matches must
+                                be against whole folder and file names, so
+                                \`foo\` matches \`/foo/bar.rb\` and \`/bar/foo/baz.rb\`
+                                but not \`/foo.rb\` or \`/foo2/bar.rb\`.
+      --no-error-count          Do not print the error count summary line
+      --autogen-version arg     Autogen version to output
+      --autogen-autoloader-exclude-require arg
+                                Names that should be excluded from top-level
+                                require statements in autoloader output. (e.g.
+                                'pry')
+      --autogen-autoloader-ignore arg
+                                Input files to exclude from autoloader
+                                output. (See --ignore for formatting.)
+      --autogen-autoloader-modules arg
+                                Top-level modules to include in autoloader
+                                output
+      --autogen-autoloader-preamble arg
+                                Preamble to add to each autoloader file
+                                (default: )
+      --autogen-autoloader-root arg
+                                Root directory for autoloader output
+                                (default: autoloader)
+      --autogen-autoloader-samefile arg
+                                Modules that should never be collapsed into
+                                their parent. This helps break cycles in
+                                certain cases. (e.g. Foo::Bar::Baz)
+      --error-url-base url-base
+                                Error URL base string. If set, error URLs are
+                                generated by prefixing the error code with
+                                this string. (default: https://srb.help/)
+
+ dev options:
+  -p, --print type              Print: [parse-tree, parse-tree-json,
+                                parse-tree-whitequark, ast, ast-raw, dsl-tree,
+                                dsl-tree-raw, index-tree, index-tree-raw,
+                                symbol-table, symbol-table-raw, symbol-table-json,
+                                symbol-table-full, symbol-table-full-raw,
+                                symbol-table-full-json, name-tree, name-tree-raw,
+                                file-table-json, resolve-tree, resolve-tree-raw,
+                                missing-constants, flattened-tree,
+                                flattened-tree-raw, cfg, cfg-json, cfg-proto, autogen,
+                                autogen-msgpack, autogen-classlist,
+                                autogen-autoloader, autogen-subclasses,
+                                plugin-generated-code]
+      --autogen-subclasses-parent string
+                                Parent classes for which generate a list of
+                                subclasses. This option must be used in
+                                conjunction with -p autogen-subclasses
+      --autogen-subclasses-ignore string
+                                Like --ignore, but it only affects \`-p
+                                autogen-subclasses\`.
+      --stop-after phase        Stop After: [init, parser, desugarer, dsl,
+                                local-vars, namer, resolver, cfg, inferencer]
+                                (default: inferencer)
+      --no-stdlib               Do not load included rbi files for stdlib
+      --skip-dsl-passes         Do not run DSL passess
+      --wait-for-dbg            Wait for debugger on start
+      --stress-incremental-resolver
+                                Force incremental updates to discover
+                                resolver & namer bugs
+      --simulate-crash          Crash on start
+      --silence-dev-message     Silence "You are running a development build"
+                                message
+      --censor-raw-locs-within-payload
+                                When printing raw location information, don't
+                                show line numbers
+      --error-white-list errorCode
+                                Error code to whitelist into reporting.
+                                Errors not mentioned will be silenced. This option
+                                can be passed multiple times.
+      --error-black-list errorCode
+                                Error code to blacklist from reporting.
+                                Errors mentioned will be silenced. This option can
+                                be passed multiple times.
+      --typed {false,true,strict,strong,[auto]}
+                                Force all code to specified strictness level
+                                (default: auto)
+      --typed-override filepath.yaml
+                                Yaml config that overrides strictness levels
+                                on files (default: )
+      --store-state file        Store state into file (default: )
+      --cache-dir dir           Use the specified folder to cache data
+                                (default: )
+      --suppress-non-critical   Exit 0 unless there was a critical error
+      --dsl-plugins filepath.yaml
+                                YAML config that configures external DSL
+                                plugins (default: )
+      --max-threads int         Set number of threads (default: 8)
+      --counter counter         Print internal counter
+      --statsd-host host        StatsD sever hostname (default: )
+      --counters                Print all internal counters
+      --suggest-typed           Suggest which typed: sigils to add or upgrade
+      --statsd-prefix prefix    StatsD prefix (default: ruby_typer.unknown)
+      --statsd-port port        StatsD server port (default: 8200)
+      --metrics-file file       File to export metrics to (default: )
+      --metrics-prefix file     Prefix to use in metrics (default:
+                                ruby_typer.unknown.)
+      --metrics-branch branch   Branch to report in metrics export (default:
+                                none)
+      --metrics-sha sha1        Sha1 to report in metrics export (default:
+                                none)
+      --metrics-repo repo       Repo to report in metrics export (default:
+                                none)
+
+EOFTC
+bundle exec srb tc --help > /tmp/$$_8 2>&1
+diff /tmp/$$_8_RIGHT /tmp/$$_8
+
+echo
+rm /tmp/$$*

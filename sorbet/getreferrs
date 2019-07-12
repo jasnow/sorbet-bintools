@@ -1,0 +1,2 @@
+mv /var/folders/lc/*/T/*/reflection.json.err .
+wc reflection.json.err
