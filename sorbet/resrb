@@ -1,6 +1,7 @@
 rm -rf o_r* Makefile
 #7/6/2019: HID FOR NOW: rm -rf sorbet ~/.cache/sorbet
 
+SFDIR="/Users/macbookpro/Projects/sorbet-FILES"
 ######################################################################
 # CHECK for commented out sorbet-rails gem.
 grep 'sorbet-rails' Gemfile |egrep -v "^#" |wc -l \
@@ -25,8 +26,8 @@ thechecks
 
 #### 5
 echo "Running 'srb init'"
-SRB_YES=1 bundle exec srb init > o_r 2> o_r_stderr
-git diff
+SRB_YES=1 bundle exec srb init 2>&1 |tee o_r # 2> o_r_stderr
+git diff |wc
 
 ###################################################################### 
 echo "Start running 'src tc' commands"
@@ -48,21 +49,6 @@ echo "#### 7a"
 srb rbi config
 git diff |wc
 
-#SEPARATE CMD:
-#echo "#### 7d - 'srb rbi gems'"
-#srb rbi gems > o_rg 2>&1
-#git diff |wc
-#
-#SEPARATE CMD:
-#echo "#### 7e - 'srb rbi hidden-definitions'"
-#srb rbi hidden-definitions > o_rh 2>&1
-#git diff |wc
-#
-#SEPARATE CMD:
-#echo "#### 7c"
-#srb rbi sorbet-typed
-#git diff |wc
-
 echo "#### 7f - 'srb rbi todo'"
 srb rbi todo
 git diff |wc
@@ -71,19 +57,19 @@ echo "#### 7g - rf"
 srb rbi find-gem-rbis 2> o_rf 2>&1
 git diff |wc
 
+# sorbet-rails tasks (7/11/2019: Added)
+if [ "X`rake -T |grep rbi`X" == "XX" ] ; then
+    echo "FYI: 'rake rails_rbi:routes rails_rbi:models' not available"
+else
+    rake rails_rbi:routes
+    rake rails_rbi:models
+fi
+
 echo "#### 7b"
 srb rbi suggest-typed
 git diff |wc
 
 srb tc 2>&1 |tee o_tc
-
-# sorbet-rails tasks (7/11/2019: Added)
-if [ "X`rake -T |grep rbi`X" == "XX" ] ; then
-    : # Skip
-else
-    rake rails_rbi:routes
-    rake rails_rbi:models
-fi
 
 #### 9
 typeds
@@ -98,36 +84,35 @@ if [ "X$1X" == "XgoldX" ] ; then
     getreferrs 2> /dev/null
 
     echo "Saving output files" 
-    cp o_r  $HOME/bin/sorbet/FILES/o_r_${REPONAME}
-    #cp o_rg $HOME/bin/sorbet/FILES/o_rg_${REPONAME}
-    #cp o_rh $HOME/bin/sorbet/FILES/o_rh_${REPONAME}
-    cp o_rf $HOME/bin/sorbet/FILES/o_rf_${REPONAME}
-    cp reflecti*err $HOME/bin/sorbet/FILES/o_ref_err_${REPONAME} \
-      2> /dev/null
+    cp o_r  ${SFDIR}/o_r_${REPONAME}
+    #cp o_rg ${SFDIR}/o_rg_${REPONAME}
+    #cp o_rh ${SFDIR}/o_rh_${REPONAME}
+    cp o_rf ${SFDIR}/o_rf_${REPONAME}
+    cp reflecti*err ${SFDIR}/o_ref_err_${REPONAME} 2> /dev/null
 else
     echo "Diffing o_r file"
-    diff $HOME/bin/sorbet/FILES/o_r_${REPONAME} o_r \
+    diff ${SFDIR}/o_r_${REPONAME} o_r \
     | egrep -v " aliases$|from-source.json$|/reflection.json|-> 0.[0-9]*s" \
     | egrep -v "from-source.json$|/reflection.json$|/hidden.rbi.tmp$" \
     | egrep -v "WARN Selenium \[DEPRECATION\] Selenium::WebDriver" \
     | egrep -v "[,0-9]*c[,0-9]*$|^---$"
 
     #echo ; echo "Diffing o_rg file"
-    #diff $HOME/bin/sorbet/FILES/o_rg_${REPONAME} o_rg \
+    #diff ${SFDIR}/o_rg_${REPONAME} o_rg \
     #| egrep -v " aliases$|from-source.json$|/reflection.json|-> 0.[0-9]*s" \
     #| egrep -v "from-source.json$|/reflection.json$|/hidden.rbi.tmp$" \
     #| egrep -v "WARN Selenium \[DEPRECATION\] Selenium::WebDriver" \
     #| egrep -v "[,0-9]*c[,0-9]*$|^---$"
     #
     #echo ; echo "Diffing o_rh file"
-    #diff $HOME/bin/sorbet/FILES/o_rh_${REPONAME} o_rh \
+    #diff ${SFDIR}/o_rh_${REPONAME} o_rh \
     #| egrep -v " aliases$|from-source.json$|/reflection.json|-> 0.[0-9]*s" \
     #| egrep -v "from-source.json$|/reflection.json$|/hidden.rbi.tmp$" \
     #| egrep -v "WARN Selenium \[DEPRECATION\] Selenium::WebDriver" \
     #| egrep -v "[,0-9]*c[,0-9]*$|^---$"
 
     echo ; echo "Diffing o_rf file"
-    diff $HOME/bin/sorbet/FILES/o_rf_${REPONAME} o_rf \
+    diff ${SFDIR}/o_rf_${REPONAME} o_rf \
     | egrep -v " aliases$|from-source.json$|/reflection.json|-> 0.[0-9]*s" \
     | egrep -v "from-source.json$|/reflection.json$|/hidden.rbi.tmp$" \
     | egrep -v "WARN Selenium \[DEPRECATION\] Selenium::WebDriver" \

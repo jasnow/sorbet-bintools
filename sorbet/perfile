@@ -1,0 +1,2 @@
+git status |egrep "d:" \
+| awk '{ print "echo", $2, "; git diff", $2, "| wc" }' |bash
