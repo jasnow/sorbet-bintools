@@ -57,6 +57,7 @@ echo "#### 7g - rf"
 srb rbi find-gem-rbis 2> o_rf 2>&1
 git diff |wc
 
+echo "line 60"
 # sorbet-rails tasks (7/11/2019: Added)
 if [ "X`rake -T |grep rbi`X" == "XX" ] ; then
     echo "FYI: 'rake rails_rbi:routes rails_rbi:models' not available"
@@ -64,6 +65,7 @@ else
     rake rails_rbi:routes
     rake rails_rbi:models
 fi
+echo "line 68"
 
 echo "#### 7b"
 srb rbi suggest-typed
@@ -90,8 +92,11 @@ if [ "X$1X" == "XgoldX" ] ; then
     cp o_rf ${SFDIR}/o_rf_${REPONAME}
     cp reflecti*err ${SFDIR}/o_ref_err_${REPONAME} 2> /dev/null
 else
-    echo "Diffing o_r file"
-    diff ${SFDIR}/o_r_${REPONAME} o_r \
+   sed -e "s,sorbet-0.4.[0-9][0-9]*,sorbet-0.4.nnnn," \
+      ${SFDIR}/o_r_${REPONAME} > /tmp/$$_1
+   sed -e "s,sorbet-0.4.[0-9][0-9]*,sorbet-0.4.nnnn," o_r > /tmp/$$_2
+   echo "Diffing o_r file"
+    diff /tmp/$$_1 /tmp/$$_2 \
     | egrep -v " aliases$|from-source.json$|/reflection.json|-> 0.[0-9]*s" \
     | egrep -v "from-source.json$|/reflection.json$|/hidden.rbi.tmp$" \
     | egrep -v "WARN Selenium \[DEPRECATION\] Selenium::WebDriver" \
@@ -111,10 +116,15 @@ else
     #| egrep -v "WARN Selenium \[DEPRECATION\] Selenium::WebDriver" \
     #| egrep -v "[,0-9]*c[,0-9]*$|^---$"
 
+    sed -e "s,sorbet-0.4.[0-9][0-9]*,sorbet-0.4.nnnn," \
+        ${SFDIR}/o_rf_${REPONAME} > /tmp/$$_1
+    sed -e "s,sorbet-0.4.[0-9][0-9]*,sorbet-0.4.nnnn," o_rf > /tmp/$$_2
     echo ; echo "Diffing o_rf file"
-    diff ${SFDIR}/o_rf_${REPONAME} o_rf \
+    diff /tmp/$$_1 /tmp/$$_2 \
+    | sed -e "s,sorbet-0.4.[0-9][0-9]*,sorbet-0.4.nnnn," \
     | egrep -v " aliases$|from-source.json$|/reflection.json|-> 0.[0-9]*s" \
     | egrep -v "from-source.json$|/reflection.json$|/hidden.rbi.tmp$" \
     | egrep -v "WARN Selenium \[DEPRECATION\] Selenium::WebDriver" \
     | egrep -v "[0-9,]*c[,0-9]*$|^---$"
+    rm -rf /tmp/$$_[12]
 fi
