@@ -1,0 +1,11 @@
+(find sorbet/rbi/sorbet-typed/lib/*/* -type f
+find sorbet/rbi/gems -type f
+) |sed -e "s,.*/,," |sort |uniq -d  > /tmp/$$_DUPS
+
+for i in `cat /tmp/$$_DUPS` ; do
+    #wc sorbet/rbi/sorbet-typed/lib/*/*/$i sorbet/rbi/gems/$i
+    echo "=== $i ========================================"
+    grep def sorbet/rbi/sorbet-typed/lib/*/*/$i sorbet/rbi/gems/$i
+# |sort | uniq -c |sort -n
+done
+rm -f /tmp/$$_DUPS

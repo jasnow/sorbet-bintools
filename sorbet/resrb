@@ -10,15 +10,16 @@ grep 'sorbet-rails' Gemfile |egrep -v "^#" |wc -l \
 if [ "X`cat /tmp/$$_PATTERN`X" = "X0X" ] ; then
     : # OK
 else
-    echo "sorbet-rails can't be in Gemfile when running 'srb init'"
-    grep 'sorbet-rails' Gemfile |egrep -v "^#"
+    :
+    #HID: echo "sorbet-rails can't be in Gemfile when running 'srb init'"
+    #HID: grep 'sorbet-rails' Gemfile |egrep -v "^#"
 #PR79:    exit 
 fi
 rm -f /tmp/$$_PATTERN
 
 ######################################################################
 #### 3
-echo "Assuming YES: Did you run 'rerake' ?"
+#HID: echo "Assuming YES: Did you run 'rerake' ?"
 #7/6/2019: HID FOR NOW: read LINE
 
 #### 4
@@ -28,6 +29,10 @@ thechecks
 echo "Running 'srb init'"
 SRB_YES=1 bundle exec srb init 2>&1 |tee o_r # 2> o_r_stderr
 git diff |wc
+
+#echo "NEW @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+#fgrep -v -f ${SFDIR}/ok_output o_r |sort -u
+#echo "NEW @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 ###################################################################### 
 echo "Start running 'src tc' commands"
@@ -57,7 +62,6 @@ echo "#### 7g - rf"
 srb rbi find-gem-rbis 2> o_rf 2>&1
 git diff |wc
 
-echo "line 60"
 # sorbet-rails tasks (7/11/2019: Added)
 if [ "X`rake -T |grep rbi`X" == "XX" ] ; then
     echo "FYI: 'rake rails_rbi:routes rails_rbi:models' not available"
@@ -65,7 +69,6 @@ else
     rake rails_rbi:routes
     rake rails_rbi:models
 fi
-echo "line 68"
 
 echo "#### 7b"
 srb rbi suggest-typed
@@ -128,3 +131,5 @@ else
     | egrep -v "[0-9,]*c[,0-9]*$|^---$"
     rm -rf /tmp/$$_[12]
 fi
+
+wc `find sorbet/rbi/[th]* -type f`

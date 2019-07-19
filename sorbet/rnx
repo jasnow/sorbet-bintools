@@ -1,0 +1,2 @@
+bazel build //main:sorbet --verbose_failures --sandbox_debug --config=static-libs --copt=-D_LIBCPP_DISABLE_AVAILABILITY
+
