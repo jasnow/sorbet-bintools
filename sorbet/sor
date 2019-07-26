@@ -14,7 +14,7 @@
 # -9- aedge/u27n: rails_app6n2_7 
 # -10-- ax/uxx: relative_time
 
-PROJECTS="sorbet|sorbet-rails"
+PROJECTS="sorbet|sorbet-rails|rails_5.2_new|parlour|empty|dry-types"
 PROJECTS="${PROJECTS}|sample_app_3_2_sorbet|sample_app_4_2_rt_255"
 PROJECTS="${PROJECTS}|relative_time|rails_app5_2|VideoGameList|gelauto"
 PROJECTS="${PROJECTS}|toy_app_sorbet|rails_app6edge|rails_app6n2_7"

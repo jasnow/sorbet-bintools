@@ -1,0 +1,9 @@
+grep Failed o_j |cut -c16- \
+|while read LINE ; do
+    echo "L: ${LINE}"
+    git grep "${LINE}" |egrep -v "^sorbet"
+    echo "...."
+    TWO=`echo ${LINE} |awk -F'::' '{ print $1 "::" $2k }'`
+    git grep "${TWO}" |egrep -v "^sorbet"
+done
+

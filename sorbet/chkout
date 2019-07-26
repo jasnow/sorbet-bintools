@@ -1,0 +1,7 @@
+if [ "X$1X" == "XX" ] ; then
+    OUTFILE="o_j"
+else
+    OUTFILE="$1"
+fi
+fgrep -v -f /Users/macbookpro/Projects/sorbet-FILES/ok_output ${OUTFILE} \
+|egrep -v "[ ]*[0-9]*[ ]* [0-9]*[ ]* [0-9]*|^[0-9]*d[0-9]*$|^$" | sort -u

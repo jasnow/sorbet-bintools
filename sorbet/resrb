@@ -74,11 +74,6 @@ echo "#### 7b"
 srb rbi suggest-typed
 git diff |wc
 
-srb tc 2>&1 |tee o_tc
-
-#### 9
-typeds
-
 #echo "Pushed results to GH if clean."
 
 ######################################################################
@@ -96,8 +91,8 @@ if [ "X$1X" == "XgoldX" ] ; then
     cp reflecti*err ${SFDIR}/o_ref_err_${REPONAME} 2> /dev/null
 else
    sed -e "s,sorbet-0.4.[0-9][0-9]*,sorbet-0.4.nnnn," \
-      ${SFDIR}/o_r_${REPONAME} > /tmp/$$_1
-   sed -e "s,sorbet-0.4.[0-9][0-9]*,sorbet-0.4.nnnn," o_r > /tmp/$$_2
+      ${SFDIR}/o_r_${REPONAME} |sort > /tmp/$$_1
+   sed -e "s,sorbet-0.4.[0-9][0-9]*,sorbet-0.4.nnnn," o_r |sort > /tmp/$$_2
    echo "Diffing o_r file"
     diff /tmp/$$_1 /tmp/$$_2 \
     | egrep -v " aliases$|from-source.json$|/reflection.json|-> 0.[0-9]*s" \
@@ -132,4 +127,15 @@ else
     rm -rf /tmp/$$_[12]
 fi
 
-wc `find sorbet/rbi/[th]* -type f`
+echo "=================================================================="
+srb tc
+typeds
+all3
+errtypes
+git status
+
+echo "=================================================================="
+
+#TEMP FIX: 
+#rmblks sorbet/rbi/sorbet-typed/lib/bundler/all/bundler.rbi
+#rmblks sorbet/rbi/sorbet-typed/lib/activesupport/all/activesupport.rbi

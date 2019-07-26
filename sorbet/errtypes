@@ -1,0 +1,26 @@
+#ERRFILES="$HOME/Projects/*/sorbet/rbi/h*/*error*"
+ERRFILES="sorbet/rbi/hidden-definitions/errors.txt"
+
+echo "Brand New Error Types"
+cat ${ERRFILES} \
+| egrep -v "^$|^#|Did you mean|undefined singleton method" \
+| egrep -v "undefined method|uninitialized constant|wrong constant" 
+
+grep "is not missing constant"     ${ERRFILES} |egrep -v "!$" # (all end with "!")
+grep "undefined method"            ${ERRFILES} |egrep -v '\$[12]' # (all had "$[12] in them)
+grep "undefined singleton method"  ${ERRFILES} |egrep -v '\$[12]' # (all had "$[12] in them)
+
+cat << EOFERRORS > /tmp/$$_ERRORS
+is not missing constant
+Did you mean
+undefined singleton method
+undefined method
+uninitialized constant
+wrong constant name
+EOFERRORS
+
+cat /tmp/$$_ERRORS \
+| while read LINE; do
+    echo "== $LINE ========================================"
+    cat ${ERRFILES} | grep "${LINE}" |sort |uniq -c |sort -n |wc
+done
