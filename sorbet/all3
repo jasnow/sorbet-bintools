@@ -1,5 +1,5 @@
 set -x
 chkout $* 2> /dev/null |wc
 egrep -v "#|^$" sorbet/rbi/todo* |wc
-sort -u sorbet/rbi//hidden-definitions/*error*  | wc
+egrep -v "Did you mean" sorbet/rbi//hidden-definitions/*error*  | sort -u |wc
 set +x

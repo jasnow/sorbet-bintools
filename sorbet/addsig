@@ -1,0 +1,10 @@
+if [ "X$1X" == "XX" ] ; then
+    echo "Usage: $0 file" ; exit
+else
+    # ONE FILE
+    #srb tc --no-config --typed=strict --autocorrect --error-white-list=7017 $1
+    :
+fi
+
+#WHOLE PROJECT/BROKEN: 
+ srb tc --typed=strict --autocorrect --error-white-list=7017

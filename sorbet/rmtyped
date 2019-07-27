@@ -1,0 +1,8 @@
+#TYPEDV="ignore"
+git grep -l "typed: ${TYPEDV}" \
+| while read FILEN ; do
+echo ${FILEN}
+    egrep -v "typed: ${TYPEDV}" ${FILEN} > /tmp/$$_f
+    mv /tmp/$$_f ${FILEN}
+done
+

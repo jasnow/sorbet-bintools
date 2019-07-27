@@ -22,5 +22,5 @@ EOFERRORS
 cat /tmp/$$_ERRORS \
 | while read LINE; do
     echo "== $LINE ========================================"
-    cat ${ERRFILES} | grep "${LINE}" |sort |uniq -c |sort -n |wc
+    cat ${ERRFILES} | grep "${LINE}" |sort |uniq -c |sort -n |wc -l
 done
