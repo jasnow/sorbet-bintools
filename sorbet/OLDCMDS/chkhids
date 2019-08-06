@@ -1,0 +1,4 @@
+if [ "X$1X" == "XX" ] ; then
+    echo "Usage: $0 word" ; exit
+fi
+grep "$1" ../*/sorbet/rbi/todo.rbi ../*/sorbet/rbi/hidden-definitions/hidden.rbi |sort -u

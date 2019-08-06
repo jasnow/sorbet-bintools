@@ -1,0 +1,16 @@
+if [ "X$1X" == "XX" ] ; then
+    echo 'Usage: Arg1 is t for (rake test/) or r for (rspec spec/)'
+    exit
+else
+    case $1 in
+    "t")
+        CMD="rspec spec/" ;;
+    *)
+        CMD="rake test/" ;;
+    esac 
+fi
+gelauto run --annotate $(find . -name '*.rb') -- bundle exec "${CMD}"
+
+for i in `git status |grep modi |awk '{ print $2 }'` ; do
+    echo >> $i
+done

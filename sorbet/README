@@ -1,0 +1,48 @@
+README - This file
+
+resrb - main script to run and "srb init" and other sorbet-related tools.
+    -- thechecks - used by resrb - run sane checks
+    -- all3 - used by resrb
+    -- typeds - used by resrb - show freq of "typed:"s 
+    -- chkout - used by resrb, unks - show good parts of o_j file
+    -- unks - used by resrb - show brand new errors/warnings
+    -- errtypes - used by resrb - show freq of diff. errors
+
+gitfreq - shows the freq count of committers on a repo
+
+sor - similar to "edge" script - shows sorbet-related repos not touch today
+
+sordir - give repo with paths
+
+######################################################################
+# Probably retired tools
+
+#UP
+OLDCMDS/perfile
+OLDCMDS/postgelauto
+
+#MAYBE
+OLDCMDS/addsig
+OLDCMDS/alltypeds
+OLDCMDS/autocorrect
+OLDCMDS/chk2
+OLDCMDS/chkADs
+OLDCMDS/chkerrnmbrs
+OLDCMDS/chkhids
+OLDCMDS/chkrbifile
+OLDCMDS/findf
+OLDCMDS/getreferrs
+OLDCMDS/gra
+OLDCMDS/mvhids
+OLDCMDS/rmblks
+OLDCMDS/rmtyped
+OLDCMDS/rnx
+OLDCMDS/runit
+OLDCMDS/sorcount
+OLDCMDS/srg
+OLDCMDS/srhd
+OLDCMDS/srst
+
+#YES
+OLDCMDS/smaller
+OLDCMDS/tallyerrs

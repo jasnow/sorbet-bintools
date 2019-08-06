@@ -1,0 +1,4 @@
+egrep -v "Redis|dalli|warning: constant|DEPRECATION WARNING" o_r \
+| egrep -v "Can't find gem for|Failed to load" \
+| egrep -v "require_relative|Building|Reading|Printing|Writing|Generating|Requiring|Naming"
+

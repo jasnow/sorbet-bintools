@@ -1,0 +1,43 @@
+(
+chkout 2>&1
+cat sorbet/rbi/todo.rbi 2>&1
+git grep -E "typed: false" 2>&1
+git grep -E "typed: false|typed: ignore" 2>&1
+) 2>&1 \
+| egrep -v "^#|^$| [0-9]*$|^[0-9,]*[a-d][0-9,]*$" \
+| egrep -v "Note: Unable to create new instance of " \
+| egrep -v "when trying to get|Anonymous_Delegator_[0-9]" \
+| egrep -v "warning: class variable access from toplevel" \
+| egrep -v "T::Private::Methods::MethodHooks" \
+| egrep -v "T::Private::Methods::SingletonMethodHooks" \
+| egrep -v "Your branch is up to date with 'origin/master" \
+| egrep -v "warning: constant ::Data is deprecated" \
+| egrep -v "config/puma.rb:# typed: false" \
+| egrep -v "activemodel.rbi:# typed: false" \
+| egrep -v "activerecord.rbi:# typed: false" \
+| egrep -v "activesupport.rbi:# typed: false" \
+| egrep -v "warning: constant.*is deprecated" \
+| egrep -v "config/spring.rb:# typed: ignore" \
+| egrep -v "creating Makefile" \
+| egrep -v "ActiveRecord::CollectionCacheKey" \
+| egrep -v "ActionMailer::Base::Mail::Message" \
+| egrep -v "DEPRECATION WARNING: " \
+| sort -u
+
+# #2: config/spring.rb:# typed: ignore
+# #4: Anonymous_Delegator_[0-9]
+# #5: when trying to get
+# #6: warning: constant ::Data is deprecated
+# #7: warning: class variable access from toplevel
+# #8: Note: Unable to create new instance of
+# #9: config/puma.rb:# typed: false
+# #9: activemodel.rbi:# typed: false
+# #9: activerecord.rbi:# typed: false
+# #9: activesupport.rbi:# typed: false
+# #10: T::Private::Methods::MethodHooks
+# #10: T::Private::Methods::SingletonMethodHooks
+# #11: warning: constant.*is deprecated
+# #12: creating Makefile
+# #13: ActiveRecord::CollectionCacheKey
+# #14: ActionMailer::Base::Mail::Message
+# #15: DEPRECATION WARNING: 

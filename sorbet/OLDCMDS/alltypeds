@@ -1,0 +1,4 @@
+for i in `sordir`; do
+    cd $i
+    git grep "typed: " |egrep "(ignore|false|true|strict|strong)$" |egrep ":#"
+done |sort -u | cut -d':' -f2- |sort |uniq -c

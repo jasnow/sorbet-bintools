@@ -1,0 +1,9 @@
+#PATN="Anonymous_Delegator"
+PATN="Delegat"
+
+for i in `grep -l ${PATN} /Users/macbookpro/Projects/*/sorbet/rbi/todo.rbi` ; do
+    cd $i 2> /dev/null
+    echo "=== $i =============================="
+    git grep ${PATN} |cat
+done |egrep -v "todo.rbi" |sort -u
+

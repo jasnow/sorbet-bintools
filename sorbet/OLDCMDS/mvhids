@@ -1,0 +1,2 @@
+ mkdir rbi
+cp sorbet/rbi/hidden-definitions/hidden.rbi rbi/save-hidden.rbi

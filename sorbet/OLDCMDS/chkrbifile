@@ -1,0 +1,17 @@
+if [ "X$1X" == "XX" ] ; then
+    echo "Usage: $0 rbifile" ; exit
+else
+    #FILEN="minitest.rbi"
+    FILEN="$1"
+fi
+
+tr -c -s "[0-9a-zA-Z_]" "\012" < ${FILEN} \
+| sort |uniq -c |sort -n |awk '$1 < 2 { print $2 }' |egrep -v "^$" > /tmp/$$_WORDS
+
+#cat /tmp/$$_WORDS
+#echo "++++++++++++++++++++++++++++++++++++++++++++++++++"
+
+fgrep -f /tmp/$$_WORDS ${FILEN} \
+| egrep -v "^  def|sig {|extend |include |typed:|untyped"
+
+rm /tmp/$$_*

@@ -1,0 +1,4 @@
+for i in `find . -type f -name "*rbi"`; do
+    echo "==== $i =============================="
+    $HOME/chkrbifile $i |wc
+done

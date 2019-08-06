@@ -1,0 +1,14 @@
+(
+cd /Users/macbookpro/Projects/sorbet ; git log 
+cd /Users/macbookpro/Projects/sorbet-typed ; git log
+cd /Users/macbookpro/Projects/sorbet-rails ; git log 
+) 2>&1 | grep Author |egrep -v Co-Author \
+| sed -e "s/ptarjan/Paul Tarjan/" \
+  -e "s,dmitry-stripe,Dmitry Petrashko," \
+  -e "s,jvilk-stripe,John Vilk," \
+  -e "s/Jacob Zimmerman/Jake Zimmerman/" \
+  -e "s/gdritter-stripe/G. D. Ritter/" \
+| sed -e "s,<.*,," \
+|sort |uniq -c |sort -n
+
+#| awk -F'<' '{ print $2 }'

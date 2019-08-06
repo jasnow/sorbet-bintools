@@ -1,0 +1,7 @@
+set -x
+chkout |grep -c "Got "
+chkout |grep -c "new inst"
+chkout |grep -c "toplevel"
+chkout |grep -c "dep"
+ls Makefile
+cat sorbet/rbi/todo.rbi |tee /dev/tty |egrep -v "^#|^$" |wc 

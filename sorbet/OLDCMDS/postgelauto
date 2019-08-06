@@ -1,0 +1,5 @@
+for i in `git grep -l "^[ ]*sig " |egrep -v "sorbet/|rbi/"` ; do
+    grep -v "sig " $i > /tmp/$$_S
+    #sed -e "s,sig ,#S# &," $i > /tmp/$$_S
+    cp /tmp/$$_S $i
+done
