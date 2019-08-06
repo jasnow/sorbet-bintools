@@ -1,8 +1,0 @@
-PATN="typed: ignore" 
-#"Did you mean"
-echo "${PATN}"
-for i in `sordir` ; do
-    cd $i
-    echo -n "     ===" `echo $i |sed -e "s,/Users/macbookpro/Projects/,,"`
-    git grep "${PATN}" | sort -u | wc -l
-done |egrep -v "0$"

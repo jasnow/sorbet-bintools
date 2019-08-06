@@ -1,3 +1,0 @@
-# Run "rake rails_rbi:routes" and "rake rails_rbi:models"
-
-srb tc --suggest-typed --typed=strict --error-white-list=7022 --autocorrect 2>&1 o_s
