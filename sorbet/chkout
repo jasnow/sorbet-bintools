@@ -4,4 +4,5 @@ else
     OUTFILE="$1"
 fi
 fgrep -v -f /Users/macbookpro/Projects/sorbet-FILES/ok_output ${OUTFILE} \
-|egrep -v "[ ]*[0-9]*[ ]* [0-9]*[ ]* [0-9]*|^[0-9]*d[0-9]*$|^$" | sort -u
+| egrep -v "[ ]*[0-9]*[ ]* [0-9]*[ ]* [0-9]*|^[0-9]*[ad][0-9]*$|^$" \
+| egrep -v "^[0-9]*$|^Errors" |egrep -v '^`' |sort -u

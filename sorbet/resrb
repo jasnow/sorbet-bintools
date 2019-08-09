@@ -1,4 +1,4 @@
-rm -rf o_r* Makefile
+rm -rf o_r* Makefile 2> /dev/null
 #7/6/2019: HID FOR NOW: rm -rf sorbet ~/.cache/sorbet
 
 SFDIR="/Users/macbookpro/Projects/sorbet-FILES"
@@ -71,9 +71,11 @@ else
     rake rails_rbi:models
 fi
 
-echo "#### 7b"
-srb rbi suggest-typed
-git diff |wc
+echo "#### 7b (srb tc -a --suggest-typed...)"
+ srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+# srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+# srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+# git diff |wc
 
 #echo "Pushed results to GH if clean."
 
@@ -128,18 +130,26 @@ else
     rm -rf /tmp/$$_[12]
 fi
 
-echo "=================================================================="
-srb tc
-typeds
-all3
+echo "==errtypes========================================================"
 errtypes
-rm -f Makefile
-git status
-
 echo "=================================================================="
+echo "REPORT"
+echo "==unks============================================================"
 unks
 unks |wc
-echo "=================================================================="
+echo "==all3============================================================"
+all3
+echo "==ct=============================================================="
+ct
+echo "==srb tc; typeds=================================================="
+srb tc
+typeds
+echo "==gg=============================================================="
+rm -f Makefile
+git status
+echo "==EOF============================================================="
+
+work > o_work
 
 #TEMP FIX: 
 #rmblks sorbet/rbi/sorbet-typed/lib/bundler/all/bundler.rbi
