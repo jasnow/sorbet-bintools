@@ -69,6 +69,9 @@ if [ "X`rake -T |grep rbi`X" == "XX" ] ; then
 else
     rake rails_rbi:routes
     rake rails_rbi:models
+    rake rails_rbi:helpers
+    rake rails_rbi:all 
+    srb rbi hidden-definitions
 fi
 
 echo "#### 7b (srb tc -a --suggest-typed...)"

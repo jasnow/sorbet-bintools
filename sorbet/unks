@@ -24,8 +24,8 @@ git grep -E "typed: false|typed: ignore" 2>&1
 | egrep -v "creating Makefile" \
 | egrep -v "ActiveRecord::CollectionCacheKey" \
 | egrep -v "ActionMailer::Base::Mail::Message" \
-| egrep -v "DEPRECATION WARNING: " \
-| egrep -v '`' \
+| egrep -v "DEPRECATION WARNING: |Running command: hidden-definitions" \
+| egrep -v '`|^===|Tasks: TOP => rails_rbi:helpers' \
 | sort -u
 
 # #2: config/spring.rb:# typed: ignore
