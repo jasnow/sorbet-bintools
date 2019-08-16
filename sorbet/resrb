@@ -149,11 +149,12 @@ srb tc
 typeds
 echo "==gg=============================================================="
 rm -f Makefile
-git status
-echo "==EOF============================================================="
-
-work > o_work
 
 #TEMP FIX: 
 #rmblks sorbet/rbi/sorbet-typed/lib/bundler/all/bundler.rbi
 #rmblks sorbet/rbi/sorbet-typed/lib/activesupport/all/activesupport.rbi
+ rmblks sorbet/rbi/sorbet-typed/lib/actionpack/all/actionpack.rbi
+ rmblks sorbet/rbi/sorbet-typed/lib/activemodel/all/activemodel.rbi
+
+git status
+echo "==EOF============================================================="

@@ -1,0 +1,6 @@
+cat o_r \
+| egrep -av "tzinfo-data |^Resolving|^pid [0-9]*|^Finished" \
+| egrep -av "^Coverage report|pattern spec|^Bundle |^Using " \
+| egrep -av "^Fetching|Generate sigs|[0-9]* examples, [0-9]* failures" \
+| egrep -av "Gemfile and run bundle install" \
+| sed -e "/-- Run/s/$/##########################################################/"
