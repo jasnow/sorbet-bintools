@@ -1,2 +1,4 @@
-sed -e "s,[ ][ ]*$,,g" -e "s/ $//g" $1 > /tmp/$$_r
-mv /tmp/$$_r $1
+if [ -f $1 ] ; then
+    sed -e "s,[ ][ ]*$,,g" -e "s/ $//g" $1 > /tmp/$$_r
+    mv /tmp/$$_r $1
+fi

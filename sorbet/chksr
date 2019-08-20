@@ -1,6 +1,11 @@
 cat o_r \
+| sed -e "s,.*Generate sigs.*,##############################," \
+| sed -e "s,^Using.*,##############################," \
+| sed -e "s,^Installing.*,##############################," \
+| sed -e "s,.*see where a bundled gem is installed.*,##############################," \
+| sed -e "/-- Run/s/$/##########################################################/" \
 | egrep -av "tzinfo-data |^Resolving|^pid [0-9]*|^Finished" \
-| egrep -av "^Coverage report|pattern spec|^Bundle |^Using " \
-| egrep -av "^Fetching|Generate sigs|[0-9]* examples, [0-9]* failures" \
-| egrep -av "Gemfile and run bundle install" \
-| sed -e "/-- Run/s/$/##########################################################/"
+| egrep -av "^/Users/macbookpro/Projects/sorbet-rails/spec/bin/../support/" \
+| egrep -av "^Coverage report|pattern spec|^Bundle " \
+| egrep -av "^Fetching|[0-9]* examples, [0-9]* failures" \
+| egrep -av "Gemfile and run bundle install"

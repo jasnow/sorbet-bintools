@@ -34,4 +34,4 @@ egrep -v "^#|^$" sorbet/rbi/todo.rbi |sort -u | wc
 
 echo; echo "=== chkout count ==============================" 
 chkout |egrep -v "^===|^Tasks|mand:" |wc
-chkout |egrep -v "^===|^Tasks|mand:" |egrep -v "Got "
+#chkout |egrep -v "^===|^Tasks|mand:" |egrep -v "Got "
