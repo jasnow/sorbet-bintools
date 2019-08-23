@@ -1,0 +1,8 @@
+for i in `find . -type f -name "*.rb_HID"`; do
+    echo "==== $i ===================="
+    git mv $i `echo $i |sed -e "s,_HID,,"`
+done
+for i in `find . -type f -name "*.rbi_HID"`; do
+    echo "==== $i ===================="
+    git mv $i `echo $i |sed -e "s,_HID,,"`
+done

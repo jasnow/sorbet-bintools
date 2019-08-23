@@ -19,12 +19,12 @@ grepit toplevel
 ER=`egrep -v "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l`
 NS=`egrep -i "Got |is deprecated|new instance|toplevel" o_j |egrep -v "^===|^< " |sort -u |wc -l`
 
-echo; echo "NON-ERROR.TXT NOISE: ${NS}"
-#sed -n '/Naming all Modules/,/Generating: sorbet\/rbi\/todo.rbi/p' o_j \
-#|egrep -v "Naming all Modules|Generating:|/var/|^Building |Generating split " \
-#|sort -u |wc
+echo; echo "=== Did you mean |sort -u ==============================" 
+egrep "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l
 
-echo; echo "ERROR.TXT NOISE: errors.txt: ${ER}"
+echo; echo "=== chkout count ==============================" 
+chkout |egrep -v "^===|^Tasks|mand:" |wc
+#chkout |egrep -v "^===|^Tasks|mand:" |egrep -v "Got "
 
 echo; echo "=== TOTAL NOISE TOTAL ========================================"
 echo ${ER} ${NS} |awk '{ print $1  + $2 }'
@@ -32,6 +32,9 @@ echo ${ER} ${NS} |awk '{ print $1  + $2 }'
 echo; echo "=== TODO.RBI WC ========================================"
 egrep -v "^#|^$" sorbet/rbi/todo.rbi |sort -u | wc
 
-echo; echo "=== chkout count ==============================" 
-chkout |egrep -v "^===|^Tasks|mand:" |wc
-#chkout |egrep -v "^===|^Tasks|mand:" |egrep -v "Got "
+echo; echo "NON-ERROR.TXT NOISE: ${NS}"
+#sed -n '/Naming all Modules/,/Generating: sorbet\/rbi\/todo.rbi/p' o_j \
+#|egrep -v "Naming all Modules|Generating:|/var/|^Building |Generating split " \
+#|sort -u |wc
+
+echo; echo "ERROR.TXT NOISE: errors.txt: ${ER}"

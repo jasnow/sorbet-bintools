@@ -1,0 +1,1 @@
+SRB_YES=1 srb init --web-trace-file=trace.json -I../mspec/lib 2>&1 |tee o_r

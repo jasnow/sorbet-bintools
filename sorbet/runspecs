@@ -1,0 +1,1 @@
+CHECK_LEAKS=true ../mspec/bin/mspec 2>&1 |tee o_r
