@@ -1,0 +1,9 @@
+echo "WORK LIST"
+
+echo
+git grep -E "typed: false"
+
+echo
+git grep -E "typed: ignore"
+
+sort -u sorbet/rbi/todo.rbi |egrep -v "^#"

@@ -7,12 +7,26 @@ resrb - main script to run and "srb init" and other sorbet-related tools.
     -- chkout - used by resrb, unks - show good parts of o_j file
     -- unks - used by resrb - show brand new errors/warnings
     -- errtypes - used by resrb - show freq of diff. errors
+    -- ct - used by resrb - show freqs of error types
+    -- rmblks - removed trailing blanks for generated files.
 
 gitfreq - shows the freq count of committers on a repo
 
 sor - similar to "edge" script - shows sorbet-related repos not touch today
 
 sordir - give repo with paths
+
+chkv2 - chkv2 but filter out sor repos.
+
+runspecs, specinit - scripts for ruby/spec repo.
+
+worklist - create a list of work items.
+
+hidem - Append "_HID" to add *.rb and *rbi files so you can hid them.
+
+sac - script to run --suggest-typed
+
+chksr - filter okay lines out of sorbet-rails' *_all_* output.
 
 ######################################################################
 # Probably retired tools
@@ -34,7 +48,6 @@ OLDCMDS/findf
 OLDCMDS/getreferrs
 OLDCMDS/gra
 OLDCMDS/mvhids
-OLDCMDS/rmblks
 OLDCMDS/rmtyped
 OLDCMDS/rnx
 OLDCMDS/runit
@@ -46,3 +59,4 @@ OLDCMDS/srst
 #YES
 OLDCMDS/smaller
 OLDCMDS/tallyerrs
+EOF
