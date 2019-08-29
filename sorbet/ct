@@ -24,7 +24,9 @@ egrep "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l
 
 echo; echo "=== chkout count ==============================" 
 chkout |egrep -v "^===|^Tasks|mand:" |wc
-#chkout |egrep -v "^===|^Tasks|mand:" |egrep -v "Got "
+if [ "X$1X" == "XvX" ] ; then
+    chkout |egrep -v "^===|^Tasks|mand:" |egrep -v "Got "
+fi
 
 echo; echo "=== TOTAL NOISE TOTAL ========================================"
 echo ${ER} ${NS} |awk '{ print $1  + $2 }'

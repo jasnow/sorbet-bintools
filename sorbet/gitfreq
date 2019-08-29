@@ -8,7 +8,6 @@ cd /Users/macbookpro/Projects/sorbet-rails ; git log
   -e "s,jvilk-stripe,John Vilk," \
   -e "s/Jacob Zimmerman/Jake Zimmerman/" \
   -e "s/gdritter-stripe/G. D. Ritter/" \
+  -e "s/neil-stripe/Neil Parikh/" \
 | sed -e "s,<.*,," \
 |sort |uniq -c |sort -n
-
-#| awk -F'<' '{ print $2 }'
