@@ -75,9 +75,10 @@ else
 fi
 
 echo "#### 7b (srb tc -a --suggest-typed...)"
- srb tc -a --suggest-typed --typed=strict --error-white-list=7022
 # srb tc -a --suggest-typed --typed=strict --error-white-list=7022
 # srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+# srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+srb rbi suggest-typed
 # git diff |wc
 
 #echo "Pushed results to GH if clean."
@@ -153,8 +154,8 @@ rm -f Makefile
 #TEMP FIX: 
 #rmblks sorbet/rbi/sorbet-typed/lib/bundler/all/bundler.rbi
 #rmblks sorbet/rbi/sorbet-typed/lib/activesupport/all/activesupport.rbi
- rmblks sorbet/rbi/sorbet-typed/lib/actionpack/all/actionpack.rbi
- rmblks sorbet/rbi/sorbet-typed/lib/activemodel/all/activemodel.rbi
+#rmblks sorbet/rbi/sorbet-typed/lib/actionpack/all/actionpack.rbi
+#rmblks sorbet/rbi/sorbet-typed/lib/activemodel/all/activemodel.rbi
 
 git status
 echo "==EOF============================================================="

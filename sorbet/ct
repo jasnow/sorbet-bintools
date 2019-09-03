@@ -17,7 +17,7 @@ grepit "new instance"
 grepit toplevel
 
 ER=`egrep -v "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l`
-NS=`egrep -i "Got |is deprecated|new instance|toplevel" o_j |egrep -v "^===|^< " |sort -u |wc -l`
+NS=`egrep -i "Got |is deprecated|new instance|toplevel" o_j |egrep -v "^===|^< |^> " |sort -u |wc -l`
 
 echo; echo "=== Did you mean |sort -u ==============================" 
 egrep "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l
@@ -35,6 +35,9 @@ echo; echo "=== TODO.RBI WC ========================================"
 egrep -v "^#|^$" sorbet/rbi/todo.rbi |sort -u | wc
 
 echo; echo "NON-ERROR.TXT NOISE: ${NS}"
+if [ "X$1X" == "XvX" ] ; then
+    egrep -i "Got |is deprecated|new instance|toplevel" o_j |egrep -v "^===|^< |^> " |sort -u
+fi
 #sed -n '/Naming all Modules/,/Generating: sorbet\/rbi\/todo.rbi/p' o_j \
 #|egrep -v "Naming all Modules|Generating:|/var/|^Building |Generating split " \
 #|sort -u |wc
