@@ -1,4 +1,5 @@
 rm -rf o_r* Makefile 2> /dev/null
+#rm -rf sorbet 2> /dev/null # 9/4/2019: Harry requested this.
 #7/6/2019: HID FOR NOW: rm -rf sorbet ~/.cache/sorbet
 
 SFDIR="/Users/macbookpro/Projects/sorbet-FILES"
@@ -63,6 +64,15 @@ echo "#### 7g - rf"
 srb rbi find-gem-rbis 2> o_rf 2>&1
 git diff |wc
 
+echo "#### 7b (srb tc -a --suggest-typed...)"
+# srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+# srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+
+# RUN BOTH OF THESE.
+#srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+srb rbi suggest-typed
+# git diff |wc
+
 # sorbet-rails tasks (7/11/2019: Added)
 if [ "X`rake -T |grep rbi`X" == "XX" ] ; then
     echo "FYI: 'rake rails_rbi:routes rails_rbi:models' not available"
@@ -73,13 +83,6 @@ else
     rake rails_rbi:all 
     srb rbi hidden-definitions
 fi
-
-echo "#### 7b (srb tc -a --suggest-typed...)"
-# srb tc -a --suggest-typed --typed=strict --error-white-list=7022
-# srb tc -a --suggest-typed --typed=strict --error-white-list=7022
-# srb tc -a --suggest-typed --typed=strict --error-white-list=7022
-srb rbi suggest-typed
-# git diff |wc
 
 #echo "Pushed results to GH if clean."
 
