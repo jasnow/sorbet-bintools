@@ -73,6 +73,7 @@ echo "#### 7b (srb tc -a --suggest-typed...)"
 srb rbi suggest-typed
 # git diff |wc
 
+# 9/4/2019: Must put "rails_rbi" commands after "suggest-typed".
 # sorbet-rails tasks (7/11/2019: Added)
 if [ "X`rake -T |grep rbi`X" == "XX" ] ; then
     echo "FYI: 'rake rails_rbi:routes rails_rbi:models' not available"
