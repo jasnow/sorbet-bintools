@@ -28,6 +28,12 @@ sac - script to run --suggest-typed
 
 chksr - filter okay lines out of sorbet-rails' *_all_* output.
 
+findignores - Find all "typed: ignore"s for a repo
+
+i2f - change all "typed: ignore" to "typed: false" for a repo
+
+srbtca - shorthand for "srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+
 ######################################################################
 # Probably retired tools
 
