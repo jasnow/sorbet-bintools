@@ -1,0 +1,6 @@
+for i in `sordir` ; do
+    cd $i
+    echo -n "=== $i: "
+    typeds |grep ignore
+    echo
+done

@@ -1,0 +1,5 @@
+for i in `git grep -l ': ignore'` ; do
+    echo "==== $i ===="
+    sed -e "s,typed: ignore,typed: false," $i > /tmp/$$_i
+    mv /tmp/$$_i $i
+done

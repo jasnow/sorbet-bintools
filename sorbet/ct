@@ -32,7 +32,16 @@ echo; echo "=== TOTAL NOISE TOTAL ========================================"
 echo ${ER} ${NS} |awk '{ print $1  + $2 }'
 
 echo; echo "=== TODO.RBI WC ========================================"
-egrep -v "^#|^$" sorbet/rbi/todo.rbi |sort -u | wc
+TODON=`egrep -v "^#|^$" sorbet/rbi/todo.rbi |sort -u | wc -l`
+echo ${TODON}
+
+echo; echo "=== WORK COUNT =============================="
+if [ "X`typeds |egrep ": false|: ignore" |wc -l |awk '{ print $1 }'`X" == "X0X" ] ; then
+    echo "${TODON}"
+else
+    FANDI=`typeds |egrep ": false|: ignore" |awk 'BEFORE { tot = 0 } ; { tot = $1 + tot } ; END { print tot }'`
+   echo `expr ${TODON} + ${FANDI}`
+fi
 
 echo; echo "NON-ERROR.TXT NOISE: ${NS}"
 if [ "X$1X" == "XvX" ] ; then

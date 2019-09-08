@@ -1,0 +1,1 @@
+srb tc -a --suggest-typed --typed=strict --error-white-list=7022
