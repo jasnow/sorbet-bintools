@@ -1,0 +1,1 @@
+egrep -ia "deprec" o_j |egrep -v "^[<>] |^===" |sort -u

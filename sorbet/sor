@@ -18,7 +18,7 @@ PROJECTS="sorbet|sorbet-rails|rails_5.2_new|parlour|empty|dry-types"
 PROJECTS="${PROJECTS}|sample_app_4_2_rt_255"
 PROJECTS="${PROJECTS}|relative_time|rails_app5_2|VideoGameList"
 PROJECTS="${PROJECTS}|toy_app_sorbet5|rails_app6edge|rails_app6n2_7"
-PROJECTS="${PROJECTS}|gelauto|rails_6_new"
+PROJECTS="${PROJECTS}|gelauto|rails_6_new|sord"
 
 #DROPPED: sample_app_3_2_sorbet|sample_app_2_3_sorbet
 

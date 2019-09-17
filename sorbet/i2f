@@ -1,5 +1,18 @@
-for i in `git grep -l ': ignore'` ; do
+if [ "X$1X" == "XX" ] ; then
+    TYPEFROM="ignore"
+else
+    TYPEFROM="$1"
+fi
+
+if [ "X$2X" == "XX" ] ; then
+    TYPETO="false"
+else
+    TYPETO="$2"
+fi
+
+for i in `git grep -al "^# typed: ${TYPEFROM}"` ; do
     echo "==== $i ===="
-    sed -e "s,typed: ignore,typed: false," $i > /tmp/$$_i
+    sed -e "s,typed: ${TYPEFROM},typed: ${TYPETO}," $i > /tmp/$$_i
     mv /tmp/$$_i $i
 done
+# typed: ignore
