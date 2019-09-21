@@ -1,0 +1,6 @@
+for i in ActionView Layouts ClassMethods ; do
+#for i in ActionView Rendering ClassMethods ; do
+
+#for i in $1 $2 $3 ; do
+    git grep -l $i
+done |sort |uniq -c |sort -n |tail -5
