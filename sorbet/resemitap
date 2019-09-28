@@ -1,0 +1,102 @@
+rm -rf o_r* Makefile 2> /dev/null
+#rm -rf sorbet 2> /dev/null # 9/4/2019: Harry requested this.
+#7/6/2019: HID FOR NOW: rm -rf sorbet ~/.cache/sorbet
+
+SFDIR="/Users/macbookpro/Projects/sorbet-FILES"
+
+######################################################################
+#### 3
+#HID: echo "Assuming YES: Did you run 'rerake' ?"
+#7/6/2019: HID FOR NOW: read LINE
+
+#### 4
+thechecks
+
+#### 5
+echo "Running 'srb init'"
+SRB_YES=1 bundle exec srb init 2>&1 |tee o_r # 2> o_r_stderr
+git diff |wc
+
+###################################################################### 
+echo "Start running 'src tc' commands"
+echo '#### 8 "srb tc" - Output: "No errors! Great job."'
+srb tc
+git diff |wc
+
+echo '#### 8b "srb tc ." - Output: "No errors! Great job."'
+srb tc .
+git diff |wc
+
+echo '#### 8c "srb tc --no-config ." - Output: "No errors! Great job."'
+srb tc --no-config .
+git diff |wc
+
+######################################################################
+echo "Start runninig other 'srb rbi' options"
+echo "#### 7a"
+srb rbi config
+git diff |wc
+
+echo "#### 7f - 'srb rbi todo'"
+srb rbi todo
+touch sorbet/rbi/todo.rbi
+git diff |wc
+
+echo "#### 7g - rf"
+srb rbi find-gem-rbis 2> o_rf 2>&1
+git diff |wc
+
+echo "#### 7b (srb tc -a --suggest-typed...)"
+# srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+# srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+
+# RUN BOTH OF THESE.
+#srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+srb rbi suggest-typed
+# git diff |wc
+
+step3
+
+echo "==errtypes========================================================"
+errtypes
+echo "=================================================================="
+echo "REPORT"
+echo "==unks============================================================"
+unks
+unks |wc
+echo "==all3============================================================"
+all3
+echo "==srb tc; typeds=================================================="
+srb tc
+typeds
+echo "==ct=============================================================="
+ct
+echo "==gg=============================================================="
+rm -f Makefile
+
+#TEMP FIX: 
+#rmblks sorbet/rbi/sorbet-typed/lib/bundler/all/bundler.rbi
+#rmblks sorbet/rbi/sorbet-typed/lib/activesupport/all/activesupport.rbi
+#rmblks sorbet/rbi/sorbet-typed/lib/actionpack/all/actionpack.rbi
+#rmblks sorbet/rbi/sorbet-typed/lib/activemodel/all/activemodel.rbi
+rmblks sorbet/rbi/sorbet-typed/lib/actionview/all/actionview.rbi
+
+git status
+
+######################################################################
+rm -rf sorbet/rbi/hidden* sorbet/rbi/sorbet-typed sorbet/rbi/todo.rbi
+
+echo "Running 'tapioca init'"
+SRB_YES=1 bundle exec tapioca init 2>&1 |tee o_r # 2> o_r_stderr
+
+srb tc
+
+######################################################################
+echo "Running 'tapioca init'"
+SRB_YES=1 bundle exec tapioca sync 2>&1 |tee o_r # 2> o_r_stderr
+
+srb tc
+
+echo "=================================================================="
+typeds
+echo "==EOF============================================================="

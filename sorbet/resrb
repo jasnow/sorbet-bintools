@@ -165,4 +165,7 @@ rm -f Makefile
 rmblks sorbet/rbi/sorbet-typed/lib/actionview/all/actionview.rbi
 
 git status
+
+echo "=================================================================="
+typeds
 echo "==EOF============================================================="

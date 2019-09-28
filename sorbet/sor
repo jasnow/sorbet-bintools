@@ -20,9 +20,16 @@ PROJECTS="${PROJECTS}|relative_time|rails_app5_2|VideoGameList"
 PROJECTS="${PROJECTS}|toy_app_sorbet5|rails_app6edge|rails_app6n2_7"
 PROJECTS="${PROJECTS}|gelauto|rails_6_new|sord"
 
+NOTPROJECTS="sorbet-bintools|sorbet-FILES|sorbet-examples"
 #DROPPED: sample_app_3_2_sorbet|sample_app_2_3_sorbet
 
-NOTPROJECTS="sorbet-bintools|sorbet-FILES|sorbet-examples"
+# Tapioca Projects
+PROJECTS="${PROJECTS}|tapioca|sorbet-issuet|sorbet-issue6t"
+PROJECTS="${PROJECTS}|sorbet-issuet|sorbet-issue6t|sorbet-bug-reportt"
+PROJECTS="${PROJECTS}|empty24t|empty25t|empty26t|rails_app6edget"
+PROJECTS="${PROJECTS}|rails_5.2_newt|sample_app_4_2_rt_255t"
+PROJECTS="${PROJECTS}|toy_app_sorbet5t|toy_app_sorbet6t|rails_6_newt"
+
 if [ "X$1X" == "XX" ] ; then
     ls -lt ${HOME}/Projects |egrep ${PROJECTS} \
     | egrep -v "`date '+%b %d'`|`date '+%b  %-d'`|${NOTPROJECTS}"

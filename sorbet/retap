@@ -1,0 +1,27 @@
+rm -rf o_r* Makefile 2> /dev/null
+#rm -rf sorbet 2> /dev/null # 9/4/2019: Harry requested this.
+#7/6/2019: HID FOR NOW: rm -rf sorbet ~/.cache/sorbet
+
+echo "=================================================================="
+echo "Running 'tapioca init'"
+SRB_YES=1 bundle exec tapioca init 2>&1 |tee o_r # 2> o_r_stderr
+
+echo "=================================================================="
+echo "Running 'tapioca generate'"
+SRB_YES=1 bundle exec tapioca generate 2>&1 |tee o_r # 2> o_r_stderr
+
+echo "=================================================================="
+echo "Running 'tapioca sync'"
+SRB_YES=1 bundle exec tapioca sync 2>&1 |tee o_r # 2> o_r_stderr
+
+sed -e "s,: false,: true," sorbet/tapioca/require.rb > /tmp/$$_R
+mv /tmp/$$_R sorbet/tapioca/require.rb
+
+echo "=================================================================="
+
+srb tc
+
+git status
+
+typeds
+echo "==EOF============================================================="
