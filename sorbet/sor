@@ -14,21 +14,31 @@
 # -9- aedge/u27n: rails_app6n2_7 
 # -10-- ax/uxx: relative_time
 
-PROJECTS="sorbet|sorbet-rails|rails_5.2_new|parlour|empty|dry-types"
-PROJECTS="${PROJECTS}|sample_app_4_2_rt_255"
-PROJECTS="${PROJECTS}|relative_time|rails_app5_2|VideoGameList"
-PROJECTS="${PROJECTS}|toy_app_sorbet5|rails_app6edge|rails_app6n2_7"
-PROJECTS="${PROJECTS}|gelauto|rails_6_new|sord"
+# Sorbet technology projects
+PROJECTS="sorbet|sorbet-rails|gelauto|sord|parlour|empty|dry-types"
 
 NOTPROJECTS="sorbet-bintools|sorbet-FILES|sorbet-examples"
-#DROPPED: sample_app_3_2_sorbet|sample_app_2_3_sorbet
+#DROPPED: sample_app_3_2_sorbet|sample_app_2_3_sorbet|relative_time|VideoGameList"
 
-# Tapioca Projects
-PROJECTS="${PROJECTS}|tapioca|sorbet-issuet|sorbet-issue6t"
-PROJECTS="${PROJECTS}|sorbet-issuet|sorbet-issue6t|sorbet-bug-reportt"
-PROJECTS="${PROJECTS}|empty24t|empty25t|empty26t|rails_app6edget"
-PROJECTS="${PROJECTS}|rails_5.2_newt|sample_app_4_2_rt_255t"
-PROJECTS="${PROJECTS}|toy_app_sorbet5t|toy_app_sorbet6t|rails_6_newt"
+if [ "X$1X" == "XtX" ] ; then
+    shift
+else
+    # sorbet app Projects
+    PROJECTS="${PROJECTS}|sample_app_4_2_rt_255|rails_5.2_new"
+    PROJECTS="${PROJECTS}|rails_app5_2|rails_app6edge"
+    PROJECTS="${PROJECTS}|toy_app_sorbet5|rails_6_new|rails_app6n2_7"
+fi
+
+if [ "X$1X" == "XtX" ] ; then
+    shift
+else
+    # Tapioca Projects
+    PROJECTS="${PROJECTS}|tapioca|sorbet-issuet|sorbet-issue6t"
+    PROJECTS="${PROJECTS}|sorbet-issuet|sorbet-issue6t|sorbet-bug-reportt"
+    PROJECTS="${PROJECTS}|empty24t|empty25t|empty26t|rails_app6edget"
+    PROJECTS="${PROJECTS}|rails_5.2_newt|sample_app_4_2_rt_255t"
+    PROJECTS="${PROJECTS}|toy_app_sorbet5t|toy_app_sorbet6t|rails_6_newt"
+fi
 
 if [ "X$1X" == "XX" ] ; then
     ls -lt ${HOME}/Projects |egrep ${PROJECTS} \

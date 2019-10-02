@@ -16,39 +16,43 @@ grepit "new instance"
 
 grepit toplevel
 
-ER=`egrep -v "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l`
-NS=`egrep -i "Got |is deprecated|new instance|toplevel" o_j |egrep -v "^===|^< |^> " |sort -u |wc -l`
-
-echo; echo "=== Did you mean |sort -u ==============================" 
-egrep "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l
-
 echo; echo "=== chkout count ==============================" 
 chkout |egrep -v "^===|^Tasks|mand:" |wc
 if [ "X$1X" == "XvX" ] ; then
     chkout |egrep -v "^===|^Tasks|mand:" |egrep -v "Got "
 fi
 
-echo; echo "=== TOTAL NOISE TOTAL ========================================"
-echo ${ER} ${NS} |awk '{ print $1  + $2 }'
-
-echo; echo "=== TODO.RBI WC ========================================"
-TODON=`egrep -v "^#|^$" sorbet/rbi/todo.rbi |sort -u | wc -l`
-echo ${TODON}
-
-echo; echo "=== WORK COUNT =============================="
-if [ "X`typeds |egrep ": false|: ignore" |wc -l |awk '{ print $1 }'`X" == "X0X" ] ; then
-    echo "${TODON}"
+if [ "X$1X" = "XtX" ] ; then
+    : # Skipped hidden-def's calculations"
 else
-    FANDI=`typeds |egrep ": false|: ignore" |awk 'BEFORE { tot = 0 } ; { tot = $1 + tot } ; END { print tot }'`
-   echo `expr ${TODON} + ${FANDI}`
-fi
+    ER=`egrep -v "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l`
+    NS=`egrep -i "Got |is deprecated|new instance|toplevel" o_j |egrep -v "^===|^< |^> " |sort -u |wc -l`
 
-echo; echo "NON-ERROR.TXT NOISE: ${NS}"
-if [ "X$1X" == "XvX" ] ; then
-    egrep -i "Got |is deprecated|new instance|toplevel" o_j |egrep -v "^===|^< |^> " |sort -u
-fi
-#sed -n '/Naming all Modules/,/Generating: sorbet\/rbi\/todo.rbi/p' o_j \
-#|egrep -v "Naming all Modules|Generating:|/var/|^Building |Generating split " \
-#|sort -u |wc
+    echo; echo "=== Did you mean |sort -u ==============================" 
+    egrep "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l
 
-echo; echo "ERROR.TXT NOISE: errors.txt: ${ER}"
+    echo; echo "=== TOTAL NOISE TOTAL ========================================"
+    echo ${ER} ${NS} |awk '{ print $1  + $2 }'
+
+
+    TODON=`egrep -v "^#|^$" sorbet/rbi/todo.rbi |sort -u | wc -l`
+    echo; echo "=== TODO.RBI WC ${TODON} ========================================"
+
+    echo; echo "=== WORK COUNT:"
+    if [ "X`typeds |egrep ": false|: ignore" |wc -l |awk '{ print $1 }'`X" == "X0X" ] ; then
+        echo "${TODON}"
+    else
+        FANDI=`typeds |egrep ": false|: ignore" |awk 'BEFORE { tot = 0 } ; { tot = $1 + tot } ; END { print tot }'`
+       echo `expr ${TODON} + ${FANDI}`
+    fi
+
+    echo; echo "=== NON-ERROR.TXT NOISE: ${NS} =============================="
+    if [ "X$1X" == "XvX" ] ; then
+        egrep -i "Got |is deprecated|new instance|toplevel" o_j |egrep -v "^===|^< |^> " |sort -u
+    fi
+    #sed -n '/Naming all Modules/,/Generating: sorbet\/rbi\/todo.rbi/p' o_j \
+    #|egrep -v "Naming all Modules|Generating:|/var/|^Building |Generating split " \
+    #|sort -u |wc
+
+    echo; echo "=== ERROR.TXT NOISE: errors.txt: ${ER} =============================="
+fi
