@@ -1,0 +1,1 @@
+sordir |cut -f5 -d/  |tr "\012" "|" |sed -e 's,|$,,'
