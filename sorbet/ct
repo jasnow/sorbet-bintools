@@ -25,25 +25,33 @@ fi
 if [ "X$1X" = "XtX" ] ; then
     : # Skipped hidden-def's calculations"
 else
-    ER=`egrep -v "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l`
     NS=`egrep -i "Got |is deprecated|new instance|toplevel" o_j |egrep -v "^===|^< |^> " |sort -u |wc -l`
 
-    echo; echo "=== Did you mean |sort -u ==============================" 
-    egrep "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l
+    if [ -f sorbet/rbi//hidden-definitions/errors.txt ] ; then
+        ER=`egrep -v "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l`
 
-    echo; echo "=== TOTAL NOISE TOTAL ========================================"
-    echo ${ER} ${NS} |awk '{ print $1  + $2 }'
+        echo; echo "=== Did you mean |sort -u ==============================" 
+        egrep "Did you mean" sorbet/rbi//hidden-definitions/errors.txt |sort -u |wc -l
+    else
+        ER=0
+    fi
 
+    echo; echo -n "=== TOTAL NOISE TOTAL:        `echo ${ER} ${NS} |awk '{ print $1  + $2 }'`"
+    echo " ========================================"
 
-    TODON=`egrep -v "^#|^$" sorbet/rbi/todo.rbi |sort -u | wc -l`
-    echo; echo "=== TODO.RBI WC ${TODON} ========================================"
+    if [ -f sorbet/rbi/todo.rbi ] ; then
+        TODON=`egrep -v "^#|^$" sorbet/rbi/todo.rbi |sort -u | wc -l`
+    else
+        TODON=0
+    fi
+    echo; echo "=== TODO.RBI WC     ${TODON} ========================================"
 
-    echo; echo "=== WORK COUNT:"
+    echo; echo -n "=== WORK COUNT:    "
     if [ "X`typeds |egrep ": false|: ignore" |wc -l |awk '{ print $1 }'`X" == "X0X" ] ; then
-        echo "${TODON}"
+        echo "${TODON}" "=============================="
     else
         FANDI=`typeds |egrep ": false|: ignore" |awk 'BEFORE { tot = 0 } ; { tot = $1 + tot } ; END { print tot }'`
-       echo `expr ${TODON} + ${FANDI}`
+       echo `expr ${TODON} + ${FANDI}` "=============================="
     fi
 
     echo; echo "=== NON-ERROR.TXT NOISE: ${NS} =============================="

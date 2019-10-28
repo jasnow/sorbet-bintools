@@ -30,25 +30,27 @@ thechecks
 echo "Running 'srb init'"
 #SRB_YES=1 srb init 2>&1 |tee o_r # 2> o_r_stderr
 SRB_YES=1 srb init 2>&1 |tee o_r # 2> o_r_stderr
+
+exit #HEH
+
 git diff |wc
 
 #echo "NEW @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 #fgrep -v -f ${SFDIR}/ok_output o_r |sort -u
 #echo "NEW @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
+exit #HEH
+
 ###################################################################### 
 echo "Start running 'src tc' commands"
 echo '#### 8 "srb tc" - Output: "No errors! Great job."'
-srb tc
-git diff |wc
+#P2/HID: srb tc ; git diff |wc
 
 echo '#### 8b "srb tc ." - Output: "No errors! Great job."'
-srb tc .
-git diff |wc
+#P2/HID: srb tc . ; git diff |wc
 
 echo '#### 8c "srb tc --no-config ." - Output: "No errors! Great job."'
-srb tc --no-config .
-git diff |wc
+#P2/HID: srb tc --no-config . ; git diff |wc
 
 ######################################################################
 echo "Start runninig other 'srb rbi' options"
@@ -90,7 +92,7 @@ echo "CC"
 #BROKEN    rake rails_rbi:all 
 #BROKEN    rake rails_rbi:custom
 echo "DD"
-    srb rbi hidden-definitions
+#P2/BROKEN    srb rbi hidden-definitions
 fi
 
 echo "EE: Pushed results to GH if clean."
@@ -162,7 +164,7 @@ unks |wc
 echo "==all3============================================================"
 all3
 echo "==srb tc; typeds=================================================="
-srb tc
+#P2/HID: srb tc
 typeds
 echo "==ct=============================================================="
 ct

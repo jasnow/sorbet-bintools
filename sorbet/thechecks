@@ -23,38 +23,38 @@ echo -n "1"
 cat << EOF > /tmp/$$_1_RIGHT
 No errors! Great job.
 EOF
-bundle exec srb typecheck -e 'puts "Hello, world!"' > /tmp/$$_1 2>&1 
+srb typecheck -e 'puts "Hello, world!"' > /tmp/$$_1 2>&1 
 diff /tmp/$$_1_RIGHT /tmp/$$_1
 
 echo -n "2"
 cat << EOF > /tmp/$$_2_RIGHT
 true
 EOF
-bundle exec ruby -e 'puts(require "sorbet-runtime")' > /tmp/$$_2 2>&1
+ruby -e 'puts(require "sorbet-runtime")' > /tmp/$$_2 2>&1
 diff /tmp/$$_2_RIGHT /tmp/$$_2
 
 echo -n "3"
 echo "No sorbet/ directory found. Maybe you want to run 'srb init'?" > /tmp/$$_3_RIGHT 
 echo >> /tmp/$$_3_RIGHT
 cat /tmp/$$_HELP_MSG >> /tmp/$$_3_RIGHT
-bundle exec srb > /tmp/$$_3 2>&1
+srb > /tmp/$$_3 2>&1
 diff /tmp/$$_3_RIGHT /tmp/$$_3
 
 echo -n "4"
 cp /tmp/$$_3_RIGHT /tmp/$$_4_RIGHT
-bundle exec srb t > /tmp/$$_4 2>&1
+srb t > /tmp/$$_4 2>&1
 diff /tmp/$$_4_RIGHT /tmp/$$_4
 
 echo -n "5"
 echo "Unknown subcommand \`-h\`" > /tmp/$$_5_RIGHT
 cat /tmp/$$_HELP_MSG >> /tmp/$$_5_RIGHT
-bundle exec srb -h > /tmp/$$_5 2>&1
+srb -h > /tmp/$$_5 2>&1
 diff /tmp/$$_5_RIGHT /tmp/$$_5
 
 echo -n "6"
 echo "Unknown subcommand \`--help\`" > /tmp/$$_6_RIGHT
 cat /tmp/$$_HELP_MSG >> /tmp/$$_6_RIGHT
-bundle exec srb --help > /tmp/$$_6 2>&1
+srb --help > /tmp/$$_6 2>&1
 diff /tmp/$$_6_RIGHT /tmp/$$_6
 
 echo -n "7"
@@ -80,7 +80,7 @@ Usage: srb rbi <command>
       find-gem-rbis       Find all \`rbi/\` directories in your gems and list them in \`~/.cache/sorbet\`
       
 EOFRBI
-bundle exec srb rbi --help > /tmp/$$_7 2>&1
+srb rbi --help > /tmp/$$_7 2>&1
 diff /tmp/$$_7_RIGHT /tmp/$$_7
 
 echo -n "8"
@@ -129,6 +129,9 @@ Usage:
                                 using \`watchman\` on your PATH. (default: watchman)
       --enable-experimental-lsp-autocomplete
                                 Enable experimental LSP feature: Autocomplete
+      --enable-experimental-lsp-autocomplete-methods
+                                Enable experimental LSP feature:
+                                Autocomplete, but only for methods
       --enable-experimental-lsp-workspace-symbols
                                 Enable experimental LSP feature: Workspace
                                 Symbols
@@ -189,17 +192,17 @@ Usage:
 
  dev options:
   -p, --print type              Print: [parse-tree, parse-tree-json,
-                                parse-tree-whitequark, ast, ast-raw, dsl-tree,
-                                dsl-tree-raw, index-tree, index-tree-raw,
-                                symbol-table, symbol-table-raw, symbol-table-json,
-                                symbol-table-full, symbol-table-full-raw,
-                                symbol-table-full-json, name-tree, name-tree-raw,
-                                file-table-json, resolve-tree, resolve-tree-raw,
-                                missing-constants, flattened-tree,
-                                flattened-tree-raw, cfg, cfg-raw, cfg-json, cfg-proto,
+                                parse-tree-whitequark, desugar-tree, desugar-tree-raw,
+                                dsl-tree, dsl-tree-raw, index-tree,
+                                index-tree-raw, name-tree, name-tree-raw, resolve-tree,
+                                resolve-tree-raw, flatten-tree,
+                                flatten-tree-raw, ast, ast-raw, cfg, cfg-raw, cfg-json,
+                                cfg-proto, symbol-table, symbol-table-raw,
+                                symbol-table-json, symbol-table-full,
+                                symbol-table-full-raw, symbol-table-full-json,
+                                file-table-json, missing-constants, plugin-generated-code,
                                 autogen, autogen-msgpack, autogen-classlist,
-                                autogen-autoloader, autogen-subclasses,
-                                plugin-generated-code]
+                                autogen-autoloader, autogen-subclasses]
       --autogen-subclasses-parent string
                                 Parent classes for which generate a list of
                                 subclasses. This option must be used in
@@ -263,7 +266,7 @@ Usage:
                                 none)
 
 EOFTC
-bundle exec srb tc --help > /tmp/$$_8 2>&1
+srb tc --help > /tmp/$$_8 2>&1
 diff /tmp/$$_8_RIGHT /tmp/$$_8
 
 echo
