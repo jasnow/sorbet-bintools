@@ -1,0 +1,3 @@
+rmblks sorbet/rbi/sorbet-typed/lib/actionview/all/actionview.rbi
+rmblks sorbet/rbi/sorbet-typed/lib/railties/all/railties.rbi
+rmblks sorbet/rbi/sorbet-typed/lib/rainbow/all/rainbow.rbi
