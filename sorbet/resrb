@@ -39,7 +39,7 @@ git diff |wc
 ###################################################################### 
 echo "Start running 'src tc' commands"
 echo '#### 8 "srb tc" - Output: "No errors! Great job."'
-srb tc
+srb tc 
 git diff |wc
 
 echo '#### 8b "srb tc ." - Output: "No errors! Great job."'
