@@ -176,6 +176,10 @@ rm -f Makefile
 #rmblks sorbet/rbi/sorbet-typed/lib/activemodel/all/activemodel.rbi
 rmblks sorbet/rbi/sorbet-typed/lib/actionview/all/actionview.rbi
 
+rmblks sorbet/rbi/sorbet-typed/lib/railties/all/railties.rbi
+rmblks sorbet/rbi/sorbet-typed/lib/rainbow/all/rainbow.rbi
+rmblks sorbet/rbi/sorbet-typed/lib/rainbow/all/rainbow.rbi
+
 git status
 
 echo "=================================================================="
