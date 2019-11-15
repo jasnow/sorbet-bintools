@@ -1,0 +1,31 @@
+cd /Users/macbookpro/Projects/sample_app_4_2_rt_255
+undoit
+srb tc
+typeds
+#NO: rake rails_rbi:all
+#NO: rake rails_rbi:custom
+rake rails_rbi:helpers
+rake rails_rbi:mailers
+rake rails_rbi:models
+rake rails_rbi:routes
+
+srb tc
+#srb rbi hidden-definitions
+#$HOME/fixit strong ignore
+$HOME/fixit strong false
+srb tc
+typeds
+
+#srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+#srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+#srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+#srb tc -a --suggest-typed --typed=strict --error-white-list=7022
+#srb tc
+#typeds
+#======================================================================
+#i2f
+#srb tc
+#srbtca2 ; srb tc
+#srbtca2 ; srb tc
+#srbtca  ; srb tc
+#typeds

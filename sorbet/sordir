@@ -1,2 +1,2 @@
-sor 99 |awk '{ print "/Users/macbookpro/Projects/" $9 }'
+sor 99 |awk '{ print "/Users/macbookpro/Projects/SOR-REPOS/" $9 }'
 # |sed -e "s,|$,,"
